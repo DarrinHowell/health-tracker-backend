@@ -25,4 +25,7 @@ public class Exercise {
         this.timeStamp = timeStamp;
     }
 
+    public String toString() {
+        return "Title: " + this.title + ". Quantity: " + this.quantity + ". Id: " + this.id;
+    }
 }
