@@ -34,6 +34,8 @@ public class ExerciseController {
         String quantity2 = "21";
         String description2 = "3 x 7";
 
+        exerciseRepo.save(newExercise);
+
         Date date2 = new Date();
         String dateFormatStringified2 = "hh:mm:ss a";
         DateFormat dateFormat2 = new SimpleDateFormat(dateFormatStringified2);
