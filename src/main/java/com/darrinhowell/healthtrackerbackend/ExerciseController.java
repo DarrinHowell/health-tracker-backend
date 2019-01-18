@@ -43,9 +43,9 @@ public class ExerciseController {
 
         exerciseRepo.save(newExercise2);
 
-        String title3 = "Power Cleans";
-        String quantity3 = "21";
-        String description3 = "3 x 7";
+        String title3 = "Bench";
+        String quantity3 = "25";
+        String description3 = "5 x 5";
 
         Date date3 = new Date();
         String dateFormatStringified3 = "hh:mm:ss a";
