@@ -13,11 +13,18 @@ import java.util.Iterator;
 @RestController
 public class ExerciseController {
 
+    ///////////////////////////// -- class variables
+
     @Autowired ExerciseRepository exerciseRepo;
+
     Gson gson = new Gson();
 
-    @RequestMapping(value = "/newExercise", method = RequestMethod.POST)
+    ///////////////////////////// -- get and post routes
 
+
+    // attribution for RequestMapping Pattern inspired by: https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
+   // takes in post.body from health-tracker front end and stores data into server db
+    @RequestMapping(value = "/newExercise", method = RequestMethod.POST)
     public void createExercise(@RequestBody String payload) {
 
         System.out.println(payload);
@@ -31,6 +38,7 @@ public class ExerciseController {
 
     }
 
+    // retrieves all exercise entities from server db, turns them into JSON, returns JSON to client
     @GetMapping("/exercises")
     public String getExercises() {
 
