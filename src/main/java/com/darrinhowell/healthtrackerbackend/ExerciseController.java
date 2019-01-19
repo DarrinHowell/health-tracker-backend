@@ -2,9 +2,7 @@ package com.darrinhowell.healthtrackerbackend;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,46 +14,21 @@ import java.util.Iterator;
 public class ExerciseController {
 
     @Autowired ExerciseRepository exerciseRepo;
+    Gson gson = new Gson();
 
-    @PostMapping("/newExercise")
-    public void createExercise() {
-        String title = "Pull Ups";
-        String quantity = "30";
-        String description = "3 x 10";
+    @RequestMapping(value = "/newExercise", method = RequestMethod.POST)
 
-        Date date = new Date();
-        String dateFormatStringified = "hh:mm:ss a";
-        DateFormat dateFormat = new SimpleDateFormat(dateFormatStringified);
-        String formattedDate = dateFormat.format(date);
+    public void createExercise(@RequestBody String payload) {
 
-        Exercise newExercise = new Exercise(title, quantity, description, formattedDate);
+        System.out.println(payload);
 
-        String title2 = "Power Cleans";
-        String quantity2 = "21";
-        String description2 = "3 x 7";
+        Exercise incomingExercise = gson.fromJson(payload, Exercise.class);
 
-        exerciseRepo.save(newExercise);
+        Exercise incomingExercise_StrippedID = new Exercise(incomingExercise.title, incomingExercise.quantity,
+                incomingExercise.description, incomingExercise.timeStamp);
 
-        Date date2 = new Date();
-        String dateFormatStringified2 = "hh:mm:ss a";
-        DateFormat dateFormat2 = new SimpleDateFormat(dateFormatStringified2);
-        String formattedDate2 = dateFormat2.format(date2);
+        exerciseRepo.save(incomingExercise_StrippedID);
 
-        Exercise newExercise2 = new Exercise(title2, quantity2, description2, formattedDate2);
-
-        exerciseRepo.save(newExercise2);
-
-        String title3 = "Bench";
-        String quantity3 = "25";
-        String description3 = "5 x 5";
-
-        Date date3 = new Date();
-        String dateFormatStringified3 = "hh:mm:ss a";
-        DateFormat dateFormat3 = new SimpleDateFormat(dateFormatStringified3);
-        String formattedDate3 = dateFormat3.format(date3);
-
-        Exercise newExercise3 = new Exercise(title3, quantity3, description3, formattedDate3);
-        exerciseRepo.save(newExercise3);
     }
 
     @GetMapping("/exercises")
@@ -69,7 +42,6 @@ public class ExerciseController {
             exerciseList.add(iter.next());
         }
 
-        Gson gson = new Gson();
         String jsonExerciseList = gson.toJson(exerciseList);
 
         return jsonExerciseList;
